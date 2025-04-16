@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arya's Portfolio</title>
+    <!-- Link to Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            border: none;
+        }
+
+        .modal-header .close {
+            color: white;
+        }
+
+        /* Background parallax effect */
+        body {
+            background-image: url('background.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            /* cursor: none; Hide default cursor */
+            overflow-x: hidden;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 1rem 2rem;
+        }
+
+        .navbar-scrolled {
+            background-color: rgba(0, 0, 0, 0.85);
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Profile section styling */
+        #profile-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        #profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Card hover effect */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            /* Memastikan kartu penuh dalam kolom */
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Animate text on hover */
+        .card-title {
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            color: #ffc107;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Mengatur jarak konten di dalam kartu */
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 300px;
+            /* Anda bisa sesuaikan tinggi sesuai kebutuhan */
+            object-fit: cover;
+            /* Menjaga proporsi gambar */
+        }
+
+        .card-role {
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-style: italic;
+            /* Memberikan gaya miring agar terlihat berbeda */
+            margin-bottom: 0.5rem;
+            /* Spasi antara role dan deskripsi utama */
+        }
+
+        .card-link {
+            text-decoration: none;
+            /* Hilangkan garis bawah pada link */
+        }
+
+
+        .card-title,
+        .card-text,
+        .btn {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Partikel untuk efek kristal atau bintang */
+        .particle {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(173, 216, 230, 0.8) 70%, rgba(0, 0, 255, 0.5) 100%);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            opacity: 0.9;
+            transform: translate(-50%, -50%);
+            animation: particle-move 0.8s ease-out forwards;
+            filter: blur(1px);
+            box-shadow: 0 0 10px rgba(255, 247, 25, 0.789), 0 0 20px rgba(173, 216, 230, 0.5), 0 0 30px rgba(0, 0, 255, 0.3);
+            z-index: 9999;
+            /* Memastikan partikel tetap di atas */
+        }
+
+        /* Animasi pergerakan dan hilangnya partikel */
+        @keyframes particle-move {
+            from {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+
+
+        /* Footer Contact Section Styling */
+        .footer-contact {
+            font-size: 1.1rem;
+            color: #ffc107;
+        }
+
+        /* Footer Background for Better Readability */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            /* Dark semi-transparent background */
+            padding: 2rem;
+            border-top: 1px solid #ffc107;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Shaneen's Portfolio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#profile-section">Profile</a></li>
+
+                <!-- Dropdown for Portfolio -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="portfolioDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Portfolio
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="portfolioDropdown">
+                        <a class="dropdown-item" href="#game-portfolio-section">Game Portfolio</a>
+                        <a class="dropdown-item" href="#track-section">Music Portfolio</a>
+                    </div>
+                </li>
+
+                <li class="nav-item"><a class="nav-link" href="#footer">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Profile Section -->
+    <section id="profile-section" class="container my-5 text-center">
+        <img src="profile.jpg" alt="Profile Picture" id="profile-pic">
+        <h2 class="mt-3">Shaneen Sophia</h2>
+        <p class="lead">Sound Artist</p>
+        <p>Explore my music and game collection and discover a world of sound and game crafted with passion and
+            creativity.</p>
+    </section>
+
+    <!-- Portfolio Section for Games -->
+    <header id="game-portfolio-section" class="text-white text-center py-5">
+        <h1>My Game Portfolio</h1>
+        <p class="lead">Discover my game creations</p>
+    </header>
+
+    <section id="game-portfolio-section" class="container my-5 text-center">
+        <h2 class="text-center mb-4">Featured Games</h2>
+        <div class="row">
+
+            <!-- Game Card 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-dark text-white"
+                    onclick="openGameModal('You`re The Prey', 'YTP icon.png', 
+                ['music/YTP/bgm mainmenu.mp3', 'music/YTP/bgm shop.mp3', 'music/YTP/ingame ambience.mp3', 
+                'music/YTP/ingame ambience 2.mp3', 'music/YTP/monster coming 1.mp3', 'music/YTP/monster coming 2.mp3',
+                'music/YTP/monster jamsker 1.mp3', 'music/YTP/monster jamsker 2.mp3', 'music/YTP/swap viewport 1.mp3',
+                'music/YTP/swap viewport 2.mp3', 'music/YTP/swap viewport 3.mp3', 'music/YTP/swap viewport 4.mp3',
+                'music/YTP/bebek mati.mp3', 'music/YTP/monster mati.mp3'], 'https://imfeelingood.itch.io/youre-the-prey')">
+                    <img src="YTP icon.png" class="card-img-top" alt="Game Image 1">
+                    <div class="card-body">
+                        <h5 class="card-title">You're The Prey</h5>
+                        <p class="card-role">Role : Sound Artist</p>
+                        <p class="card-text">They call it "the Thing," but that's only because there's no other way
+                            to describe it. It looks like a duck, it moves like a duck, but one glance and you
+                            know—it’s not a duck. Its beak curls into something that resembles a grin, lined with
+                            teeth so sharp they look more like slivers of broken glass. Its eyes… a searing red,
+                            hollow, as if peering straight into you, lingering too long.</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Game Card 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-dark text-white"
+                    onclick="openGameModal('Everything About Nightmare', 'EAN Icon.png', 
+                ['music/EAN/bgm main menu.wav', 'music/EAN/monster scream.mp3', 'music/EAN/note.mp3',
+                'music/EAN/note2.mp3', 'music/EAN/note3.mp3', 'music/EAN/note4.mp3', 'music/EAN/note5.mp3'], 'https://okelahiniaja.itch.io/everything-about-nightmare')">
+                    <img src="EAN Icon.png" class="card-img-top" alt="Game Image 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Everything About Nightmare</h5>
+                        <p class="card-role">Role : Programmer & Sound Artist</p>
+                        <p class="card-text">Tells the story of a little girl named Alita who was initially sleeping
+                            in her room, but in a semi-conscious state, she was suddenly kidnapped by a large and
+                            scary monster. Without knowing what happened, Alita suddenly woke up in a dark house,
+                            requiring Alita to get out of the house by going through several puzzles and hiding from
+                            the monster.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Card 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-dark text-white"
+                    onclick="openGameModal('Ashes of Polyhymnia', 'AOP Icon.png', 
+                ['music/AOP/quickplay x.mp3', 'music/AOP/main menu 1.mp3', 'music/AOP/main menu 2.mp3', 'music/AOP/main menu 3.mp3', 
+                'music/AOP/quickplay 1.mp3', 'music/AOP/quickplay 2.mp3', 'music/AOP/quickplay 3.mp3', 'music/AOP/quickplay x.mp3', 
+                'music/AOP/splash screen.mp3', 'music/AOP/stage 1.mp3', 'music/AOP/track tutorial.mp3'], 'https://youtu.be/0WZ9cRmYntw')">
+                    <img src="AOP Icon.png" class="card-img-top" alt="Game Image 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Ashes of Polyhymnia</h5>
+                        <p class="card-role">Role : Programmer & Sound Artist</p>
+                        <p class="card-text">Tells the story of a group of musicians in the post-modern era who feel
+                            that the world seems empty and happiness is hard to attain. This group of musicians
+                            shares a common goal: to bring color and joy to the world. However, they face challenges
+                            in doing so, as depression has taken over a large part of society. As a result, they
+                            travel back in time with a mission to prevent the sadness and emptiness that will engulf
+                            the future by performing classic songs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more game cards as needed -->
+        </div>
+
+        <!-- Game Details Modal 1-->
+        <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gameModalLabel">Everything About Nightmare</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <!-- Main Image -->
+                        <img id="gameModalImage" src="" alt="Game Image" class="img-fluid mb-3" />
+
+                        <!-- Additional Images -->
+                        <div id="gameModalThumbnails" class="d-flex justify-content-center mb-3"></div>
+
+                        <!-- Audio Player Section for Multiple Tracks -->
+                        <div id="gameModalAudioList" class="mb-3">
+                            <!-- Audio tracks will be inserted here dynamically -->
+                        </div>
+
+                        <!-- Link to Game -->
+                        <a id="gameModalLink" href="#" target="_blank" class="btn btn-primary">Play on itch.io</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Details Modal 2-->
+        <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gameModalLabel">You`re The Prey</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <!-- Main Image -->
+                        <img id="gameModalImage" src="" alt="Game Image" class="img-fluid mb-3" />
+
+                        <!-- Additional Images -->
+                        <div id="gameModalThumbnails" class="d-flex justify-content-center mb-3"></div>
+
+                        <!-- Audio Player Section for Multiple Tracks -->
+                        <div id="gameModalAudioList" class="mb-3">
+                            <!-- Audio tracks will be inserted here dynamically -->
+                        </div>
+
+                        <!-- Link to Game -->
+                        <a id="gameModalLink" href="#" target="_blank" class="btn btn-primary">Play on itch.io</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Details Modal 3-->
+        <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gameModalLabel">Ashes of Polyhymnia</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <!-- Main Image -->
+                        <img id="gameModalImage" src="" alt="Game Image" class="img-fluid mb-3" />
+
+                        <!-- Additional Images -->
+                        <div id="gameModalThumbnails" class="d-flex justify-content-center mb-3"></div>
+
+                        <!-- Audio Player Section for Multiple Tracks -->
+                        <div id="gameModalAudioList" class="mb-3">
+                            <!-- Audio tracks will be inserted here dynamically -->
+                        </div>
+
+                        <!-- Link to Game -->
+                        <a id="gameModalLink" href="#" target="_blank" class="btn btn-primary">Play on Trailer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Portfolio Header -->
+    <header id="portfolio-header" class="text-white text-center py-5">
+        <h1>My Music Portfolio</h1>
+        <p class="lead">Discover my latest musical creations</p>
+        <a href="https://www.fiverr.com/shaneensophia/make-background-music-for-your-vtuber-livestreams-or-games"
+            class="btn btn-primary" target="_blank">More of My Creations</a>
+    </header>
+
+    <section id="track-section" class="container my-5 text-center">
+        <div class="container my-5">
+            <h2 class="text-center mb-4">Featured Tracks</h2>
+            <div class="row" id="musicTrackList">
+            </div>
+            <div class="text-center mt-4">
+                <a href="https://www.fiverr.com/shaneensophia/make-background-music-for-your-vtuber-livestreams-or-games"
+                    class="btn btn-primary btn-lg" target="_blank">
+                    More of My Creations
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer with Contact Information -->
+    <footer id="footer" class="text-white text-center py-4">
+        <div class="footer-contact">
+            <p>Contact Information:</p>
+            <p>Email: <a href="mailto:aryayudistira2903@gmail.com"
+                    class="text-decoration-none text-warning">aryayudistira2903@gmail.com</a> |
+                Phone: <a href="https://wa.me/62895414539854" class="text-decoration-none text-warning"
+                    target="_blank">+62 8954-1453-9854</a></p>
+            <p>Follow me on social media:</p>
+            <p>
+                <a href="https://instagram.com/aryayepe" class="text-decoration-none text-warning"
+                    target="_blank">Instagram</a>
+            </p>
+        </div>
+    </footer>
+
+
+    <!-- Link to Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Fungsi untuk membuat partikel pada posisi kursor
+        function createParticles(x, y) {
+            // Membuat beberapa partikel kecil yang menyerupai kristal atau bintang
+            for (let i = 0; i < 3; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Posisi acak di sekitar kursor
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+
+                particle.style.left = `${x + offsetX}px`;
+                particle.style.top = `${y + offsetY}px`;
+
+                // Ukuran acak untuk setiap partikel (sedikit lebih besar)
+                const size = Math.random() * 10 + 5; // Ukuran antara 5px hingga 15px
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                document.body.appendChild(particle);
+
+                // Hapus partikel setelah 0.8 detik
+                setTimeout(() => {
+                    particle.remove();
+                }, 800);
+            }
+        }
+
+        // Menyimpan posisi terakhir kursor
+        let lastX = window.innerWidth / 2;
+        let lastY = window.innerHeight / 2;
+
+        // Mendengarkan pergerakan mouse untuk memperbarui posisi kursor
+        document.addEventListener('mousemove', function (e) {
+            lastX = e.clientX;
+            lastY = e.clientY;
+            createParticles(lastX, lastY);
+        });
+
+        // Membuat partikel secara berkala, meskipun kursor tidak bergerak
+        setInterval(() => {
+            createParticles(lastX, lastY);
+        }, 300); // Partikel muncul setiap 300ms
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+
+        function openGameModal(title, image, audioTracks, link) {
+            // Set modal title, image, and link
+            document.getElementById('gameModalLabel').textContent = title;
+            document.getElementById('gameModalImage').src = image;
+            document.getElementById('gameModalLink').href = link;
+
+            // Clear any previous audio tracks in the modal
+            const audioListContainer = document.getElementById('gameModalAudioList');
+            audioListContainer.innerHTML = '';
+
+            // Dynamically create audio controls for each track
+            audioTracks.forEach((audioSrc) => {
+                const audioContainer = document.createElement('div');
+                audioContainer.classList.add('mb-3');
+
+                // Extract and format the filename
+                const fileName = audioSrc.split('/').pop().replace(/\.[^/.]+$/, '').replace(/_/g, ' ');
+
+                const audioLabel = document.createElement('p');
+                audioLabel.textContent = fileName;  // Display the formatted filename
+                audioLabel.classList.add('text-warning');
+
+                const audioElement = document.createElement('audio');
+                audioElement.controls = true;
+                audioElement.classList.add('w-100');
+
+                const sourceElement = document.createElement('source');
+                sourceElement.src = audioSrc;
+                sourceElement.type = 'audio/mp3';
+
+                audioElement.appendChild(sourceElement);
+                audioContainer.appendChild(audioLabel);
+                audioContainer.appendChild(audioElement);
+
+                audioListContainer.appendChild(audioContainer);
+            });
+
+            // Show the modal
+            $('#gameModal').modal('show');
+        }
+
+        fetch('tracks.json')
+            .then(response => response.json())
+            .then(audioFiles => {
+                const container = document.getElementById('musicTrackList');
+
+                audioFiles.forEach(audioSrc => {
+                    const card = document.createElement('div');
+                    card.className = 'col-md-4 mb-4';
+
+                    const trackName = audioSrc.split('/').pop().replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ');
+
+                    card.innerHTML = `
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">${trackName}</h5>
+                            <audio controls loop class="w-100">
+                                <source src="${audioSrc}" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(err => {
+                console.error('Error loading tracks:', err);
+            });
+
+
+
+    </script>
+
+
+</body>
+
+</html>
